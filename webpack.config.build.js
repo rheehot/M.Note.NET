@@ -2,6 +2,9 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+    // node: {
+    //     fs: "empty"
+    // },
     output: {
         path: __dirname + "/docs",
         publicPath: "/MaSungNote.NET"
@@ -17,6 +20,14 @@ module.exports = {
                 options: {
                     name: '[hash].[ext]',
                 },
+            },
+            {
+                test: /\.md$/,
+                use: [{
+                    loader: "html-loader"
+                }, {
+                    loader: "markdown-loader"
+                }]
             }
         ]
     },
