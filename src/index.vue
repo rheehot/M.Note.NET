@@ -3,36 +3,36 @@
     {{msg}}<br />
     LIST
     --------------------------------------------------------------<br />
-    <button v-for="(md , idx) in mdlist" v-bind:key="idx" v-on:click="mdChange" v-bind:value="md.filename">{{md.filename}}</button>
-    <br />
-    --------------------------------------------------------------<br />
+    <div v-for="(mdCate , idx) in markdownList" v-bind:key="idx">
+      {{mdCate.category}}
+      <button v-for="(md, mdIdx) in mdCate.mdList" v-bind:key="mdIdx" v-on:click="mdChange" v-bind:value="md.category + '/' + md.filename">{{md.filename}}</button>
+    </div>
+    <br />--------------------------------------------------------------<br />
     <article class="markdown-body" v-html="md"></article>
   </section>
 
 </template>
 <script>
-import mark from './markdown/sample.md'
-
 export default {
   data() {
     return {
       msg: "This is MaSungNote.NET",
-      mdlist: "",
+      markdownList: [],
       md: "",
     }
   },
   mounted() {
 
     console.log(__markdownList__)
-    this.$data.mdlist = __markdownList__
-    this.$data.md = mark;
+     this.$data.markdownList = __markdownList__
+    // this.$data.md = mark;
   },
   methods: {
     mdChange(e) {
       var _this = this;
       console.log(e.target.value);
       var targetMd = `./markdown/${e.target.value}`;
-      import(targetMd).then(target => {
+      import( /* webpackChunkName: "[request]" */ `${targetMd}`).then(target => {
         console.log(target)
         _this.$data.md = target
       })

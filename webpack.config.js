@@ -1,21 +1,42 @@
 const webpack = require('webpack')
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const MARKDOWN_FILE_DIR = "./src/markdown";
-const markdownList = [];
-// Read directory contents
-require("fs").readdirSync(MARKDOWN_FILE_DIR)
-    // Take only .md files
-    .filter(filename => /\.md$/.test(filename))
-    // Normalize file data.
-    .map(filename => {
-        console.log(filename)
-        markdownList.push({
-            filename: filename
-        })
-    });
-console.log(markdownList)
+const __MARKDOWN_FILE_DIR = "./src/markdown";
+const __markdownList = [];
+const __markdownChunkGroup = {}
+const __markdownChunkGroupOption = {chunks: "all", minSize:0, minChunks: 1, reuseExistingChunk: true, enforce: true};
+// Read directory markdownFolderCategory 
+require("fs").readdirSync(__MARKDOWN_FILE_DIR).forEach(categoryFolder=>{
+    var mdList = [];
+    require("fs").readdirSync(`${__MARKDOWN_FILE_DIR}/${categoryFolder}`)
+        // Take only .md files
+        .filter(filename => /\.md$/.test(filename))
+        // Normalize file data.
+        .map(filename => {
+            console.log(filename)
+            mdList.push({
+                category : categoryFolder,
+                filename: filename
+            })
+        });
+    __markdownList.push({
+        category : categoryFolder,
+        mdList : mdList
+    })
+    __markdownChunkGroup[categoryFolder] = {
+        name: categoryFolder,
+         test: new RegExp('[\//]' + categoryFolder + '[\//]'),
+        ...__markdownChunkGroupOption
+    }
+})
+console.log(__markdownChunkGroup)
+// console.log(__markdownList)
 module.exports = {
+    output: {
+        path: __dirname + "/docs",
+        publicPath: "/Note.NET",
+        chunkFilename: '[name].bundle.js',
+    },
     module: {
         rules: [{
             test: /\.vue$/,
@@ -55,7 +76,28 @@ module.exports = {
             filename: './index.html'
         }),
         new webpack.DefinePlugin({
-            __markdownList__: JSON.stringify(markdownList)
+            __markdownList__: JSON.stringify(__markdownList)
         })
-    ]
+    ],
+    optimization: {
+        minimize: true,
+        namedModules: true,
+        noEmitOnErrors: true,
+        concatenateModules: true,
+        mangleWasmImports: true,
+        removeAvailableModules: true,
+        removeEmptyChunks: true,
+        mergeDuplicateChunks: true,
+        splitChunks: {
+            chunks: 'all',
+            maxInitialRequests: 1,
+            minSize: 0,
+            maxSize: 200,
+        },
+        splitChunks: {
+            // include all types of chunks
+            cacheGroups:__markdownChunkGroup,
+            cacheGroups:
+        }
+    }
 };
