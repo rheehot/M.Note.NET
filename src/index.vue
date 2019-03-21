@@ -1,21 +1,44 @@
 <template>
   <section>
-    {{msg}}
+    {{msg}}<br />
+    LIST
+    --------------------------------------------------------------<br />
+    <button v-for="(md , idx) in mdlist" v-bind:key="idx" v-on:click="mdChange" v-bind:value="md.filename">{{md.filename}}</button>
+    <br />
+    --------------------------------------------------------------<br />
     <article class="markdown-body" v-html="md"></article>
   </section>
 
 </template>
 <script>
 import mark from './markdown/sample.md'
+
 export default {
   data() {
     return {
       msg: "This is MaSungNote.NET",
+      mdlist: "",
       md: "",
     }
   },
   mounted() {
+
+    console.log(__markdownList__)
+    this.$data.mdlist = __markdownList__
     this.$data.md = mark;
+  },
+  methods: {
+    mdChange(e) {
+      var _this = this;
+      console.log(e.target.value);
+      var targetMd = `./markdown/${e.target.value}`;
+      import(targetMd).then(target => {
+        console.log(target)
+        _this.$data.md = target
+      })
+
+    }
+
   }
 }
 
