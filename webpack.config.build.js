@@ -7,7 +7,7 @@ module.exports = {
     // },
     output: {
         path: __dirname + "/docs",
-        publicPath: "/MaSungNote.NET"
+        publicPath: "/Note.NET"
     },
     module: {
         rules: [{
