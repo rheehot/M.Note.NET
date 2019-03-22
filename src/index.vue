@@ -24,7 +24,7 @@ export default {
   mounted() {
 
     console.log(__markdownList__)
-     this.$data.markdownList = __markdownList__
+    this.$data.markdownList = __markdownList__
     // this.$data.md = mark;
   },
   methods: {
@@ -32,7 +32,7 @@ export default {
       var _this = this;
       console.log(e.target.value);
       var targetMd = `./markdown/${e.target.value}`;
-      import( /* webpackChunkName: "[request]" */ `${targetMd}`).then(target => {
+      import( /* webpackChunkName: "청크네임" */ `${targetMd}`).then(target => {
         console.log(target)
         _this.$data.md = target
       })

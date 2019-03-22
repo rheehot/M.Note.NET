@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const markdownConfig = require('./webpack.config.markdown');
 
 const webpackBasicConfig = merge(markdownConfig, {
@@ -20,10 +21,8 @@ const webpackBasicConfig = merge(markdownConfig, {
             exclude: /tus-js-client|node_modules\/(?!(dom7|ssr-window|vue-plugin-load-script)\/).*/
         }, {
             test: /\.(ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-            loader: 'url-loader',
-            options: {
-                name: '[hash].[ext]',
-            },
+            exclude: /node_modules/,
+            loader: 'file-loader?name=img/[path][name].[ext]&context=./app/images'
         }, {
             test: /\.css$/,
             use: ['style-loader', 'css-loader'],
@@ -38,9 +37,13 @@ const webpackBasicConfig = merge(markdownConfig, {
     plugins: [
         new VueLoaderPlugin(),
         new HtmlWebPackPlugin({
+            favicon: './src/assets/favicon.ico',
             template: './src/index.html',
             filename: './index.html'
         }),
+        new CopyWebpackPlugin([{
+            from: './src/assets/favicon.ico'
+        }, ])
     ],
     optimization: {
         minimize: true,
