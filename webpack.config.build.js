@@ -3,7 +3,7 @@
  const webpackBuildConfig = merge(baseConfig, {
      output: {
          path: __dirname + "/docs",
-         publicPath: "/Note.NET"
+         //  publicPath: "/Note.NET"
      },
  });
  module.exports = webpackBuildConfig
