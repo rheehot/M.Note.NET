@@ -1,11 +1,12 @@
+const path = require('path');
 const webpack = require('webpack')
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const markdownConfig = require('./webpack.config.markdown');
 
 const webpackBasicConfig = merge(markdownConfig, {
+    entry: ['babel-polyfill', './src/index.js'],
     output: {
         path: __dirname + "/docs",
         // publicPath: "/Note.NET",
@@ -30,7 +31,8 @@ const webpackBasicConfig = merge(markdownConfig, {
     },
     resolve: {
         alias: {
-            "vue$": "vue/dist/vue.esm.js"
+            "vue$": "vue/dist/vue.esm.js",
+            'View': path.resolve(__dirname, './src/Vue'),
         },
         extensions: ['*', '.js', '.vue', '.json']
     },
@@ -41,9 +43,6 @@ const webpackBasicConfig = merge(markdownConfig, {
             template: './src/index.html',
             filename: './index.html'
         }),
-        new CopyWebpackPlugin([{
-            from: './src/assets/favicon.ico'
-        }, ])
     ],
     optimization: {
         minimize: true,

@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[7],{"./src/Vue/footer.vue?vue&type=template&id=0ce460fd&":function(e,o,d){"use strict";var t=d("./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./src/Vue/footer.vue?vue&type=template&id=0ce460fd&");d.d(o,"a",function(){return t.a}),d.d(o,"b",function(){return t.b})}}]);

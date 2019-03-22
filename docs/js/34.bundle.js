@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[34],{"./src/index.html":function(e,n){throw new Error("Module parse failed: Unexpected token (1:0)\nYou may need an appropriate loader to handle this file type.\n> <html>\r\n| <title>MaSungNote.NET</title>\r\n| \r")}}]);
