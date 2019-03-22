@@ -9,7 +9,7 @@ const webpackBasicConfig = merge(markdownConfig, {
     output: {
         path: __dirname + "/docs",
         // publicPath: "/Note.NET",
-        chunkFilename: '[name].bundle.js',
+        chunkFilename: './js/[name].bundle.js',
     },
     module: {
         rules: [{
