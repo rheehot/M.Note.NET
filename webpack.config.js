@@ -1,40 +1,13 @@
 const webpack = require('webpack')
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const __MARKDOWN_FILE_DIR = "./src/markdown";
-const __markdownList = [];
-const __markdownChunkGroup = {}
-const __markdownChunkGroupOption = {chunks: "all", minSize:0, minChunks: 1, reuseExistingChunk: true, enforce: true};
-// Read directory markdownFolderCategory 
-require("fs").readdirSync(__MARKDOWN_FILE_DIR).forEach(categoryFolder=>{
-    var mdList = [];
-    require("fs").readdirSync(`${__MARKDOWN_FILE_DIR}/${categoryFolder}`)
-        // Take only .md files
-        .filter(filename => /\.md$/.test(filename))
-        // Normalize file data.
-        .map(filename => {
-            console.log(filename)
-            mdList.push({
-                category : categoryFolder,
-                filename: filename
-            })
-        });
-    __markdownList.push({
-        category : categoryFolder,
-        mdList : mdList
-    })
-    __markdownChunkGroup[categoryFolder] = {
-        name: categoryFolder,
-         test: new RegExp('[\//]' + categoryFolder + '[\//]'),
-        ...__markdownChunkGroupOption
-    }
-})
-console.log(__markdownChunkGroup)
-// console.log(__markdownList)
-module.exports = {
+const merge = require('webpack-merge');
+const markdownConfig = require('./webpack.config.markdown');
+
+const webpackBasicConfig = merge(markdownConfig, {
     output: {
         path: __dirname + "/docs",
-        publicPath: "/Note.NET",
+        // publicPath: "/Note.NET",
         chunkFilename: '[name].bundle.js',
     },
     module: {
@@ -52,13 +25,6 @@ module.exports = {
                 name: '[hash].[ext]',
             },
         }, {
-            test: /\.md$/,
-            use: [{
-                loader: "html-loader"
-            }, {
-                loader: "markdown-loader"
-            }]
-        }, {
             test: /\.css$/,
             use: ['style-loader', 'css-loader'],
         }, ]
@@ -75,9 +41,6 @@ module.exports = {
             template: './src/index.html',
             filename: './index.html'
         }),
-        new webpack.DefinePlugin({
-            __markdownList__: JSON.stringify(__markdownList)
-        })
     ],
     optimization: {
         minimize: true,
@@ -94,10 +57,6 @@ module.exports = {
             minSize: 0,
             maxSize: 200,
         },
-        splitChunks: {
-            // include all types of chunks
-            cacheGroups:__markdownChunkGroup,
-            cacheGroups:
-        }
     }
-};
+});
+module.exports = webpackBasicConfig;
