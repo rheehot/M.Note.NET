@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[14],{"./src/Vue/footer.vue?vue&type=script&lang=js&":function(e,o,s){"use strict";var n=s("./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js?!./src/Vue/footer.vue?vue&type=script&lang=js&");o.a=n.a}}]);

@@ -57,7 +57,7 @@ const webpackBasicConfig = merge(markdownConfig, {
             chunks: 'all',
             maxInitialRequests: 1,
             minSize: 0,
-            maxSize: 200,
+            // maxSize: 200,
         },
     }
 });

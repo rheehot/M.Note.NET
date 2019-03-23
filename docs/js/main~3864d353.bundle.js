@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[10],{"./src/index.js":function(e,n,s){"use strict";s.r(n);var u=s("./node_modules/vue/dist/vue.esm.js"),d=s("./src/index.vue"),o=new u.a({render:function(e){return e(d.default)}}).$mount("#app");window.vueApp=o}}]);
