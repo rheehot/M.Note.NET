@@ -32,7 +32,8 @@ const webpackBasicConfig = merge(markdownConfig, {
     resolve: {
         alias: {
             "vue$": "vue/dist/vue.esm.js",
-            'View': path.resolve(__dirname, './src/Vue'),
+            'View': path.resolve(__dirname, './src/Vue'),           
+            'VueConfig': path.resolve(__dirname, './src/Vue/config'),
         },
         extensions: ['*', '.js', '.vue', '.json']
     },
