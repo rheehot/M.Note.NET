@@ -5,7 +5,6 @@ import VueRouter from "vue-router";
 import VueRouterConfig from "VueConfig/router"
 
 const vRouter = new VueRouter({
-    mode:"history",
     routes:VueRouterConfig
 })
 
