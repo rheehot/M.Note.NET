@@ -4,6 +4,8 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
 const markdownConfig = require('./webpack.config.markdown');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 
 const webpackBasicConfig = merge(markdownConfig, {
     entry: ['babel-polyfill', './src/index.js'],
@@ -34,6 +36,7 @@ const webpackBasicConfig = merge(markdownConfig, {
             "vue$": "vue/dist/vue.esm.js",
             'View': path.resolve(__dirname, './src/Vue'),           
             'VueConfig': path.resolve(__dirname, './src/Vue/config'),
+            'Markdown': path.resolve(__dirname, './src/markdown'),
         },
         extensions: ['*', '.js', '.vue', '.json']
     },
@@ -44,6 +47,7 @@ const webpackBasicConfig = merge(markdownConfig, {
             template: './src/index.html',
             filename: './index.html'
         }),
+
     ],
     optimization: {
         minimize: true,

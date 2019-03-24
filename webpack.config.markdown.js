@@ -29,7 +29,7 @@ require("fs").readdirSync(__MARKDOWN_FILE_DIR).forEach(categoryFolder => {
     })
     __markdownChunkGroup[categoryFolder] = {
         name: categoryFolder,
-        test: new RegExp('\\\\|\/' + categoryFolder + '\\\\|\/'),
+        test: new RegExp('[\\\\/]' + categoryFolder + '[\\\/]'),
         ...__markdownChunkGroupOption
     }
 })

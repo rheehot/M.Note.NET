@@ -15,6 +15,9 @@
          }),
          new CopyWebpackPlugin([
             { from: './src/CNAME' }
+        ]),
+        new CopyWebpackPlugin([
+            { from: './src/markdown', to:'./Markdown' }
         ])
      ]
  });

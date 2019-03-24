@@ -30,20 +30,16 @@ export default {
   methods: {
     mdChange(e) {
       console.log(e.target.value);
-      var targetMd = `./markdown/${e.target.value}`;
+      var targetMd = `Markdown/${e.target.value}`;
       var _this = this;
-      _this.$data.isLoading = true;
-      this.$nextTick(() => {
-
-        this.importMardkdownn(targetMd).then(target => {
-          _this.$data.md = target
-          _this.$data.isLoading = false;
-        })
-
+      this.$data.isLoading = true;
+      this.importMardkdownn(targetMd).then(target => {
+        _this.$data.md = target
+        _this.$data.isLoading = false;
       })
     },
     async importMardkdownn(targetMd) {
-      var result = await import( /* webpackChunkName: "청크네임" */ `${targetMd}`)
+      var result = await import(`${targetMd}`)
       return result;
     }
   }
