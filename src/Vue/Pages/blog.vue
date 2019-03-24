@@ -30,7 +30,7 @@ export default {
   methods: {
     mdChange(e) {
       console.log(e.target.value);
-      var targetMd = `./Markdown/${e.target.value}`;
+      var targetMd = `./md/${e.target.value}`;
       var _this = this;
       this.$data.isLoading = true;
       this.importMardkdownn(targetMd).then(target => {

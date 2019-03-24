@@ -17,7 +17,7 @@
             { from: './src/CNAME' }
         ]),
         new CopyWebpackPlugin([
-            { from: './src/markdown', to:'./Markdown' }
+            { from: './src/markdown', to:'./md' }
         ])
      ]
  });
