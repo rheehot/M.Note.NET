@@ -18,11 +18,10 @@
 
 
 <script>
-import markdownit from 'markdown-it';
-
 export default {
   data() {
     return {
+      markdownit: require('markdown-it'),
       markdownCateList: [],
       markdownContents: "",
       isLoading: false,
@@ -30,6 +29,9 @@ export default {
     }
   },
   mounted() {
+    this.$data.markdownit = require('markdown-it')({
+      html: true,
+    });
     var data = JSON.parse(localStorage.getItem("markdownCateList"))
     if (typeof data === 'undefined' || !data) {
       this.GetMardownList();
@@ -67,7 +69,7 @@ export default {
         })
         .then(function (response) {
           console.log(response)
-          _this.$data.markdownContents = markdownit.render(response);
+          _this.$data.markdownContents = _this.$data.markdownit.render(response);
         });
     },
     GetMardownList() {
