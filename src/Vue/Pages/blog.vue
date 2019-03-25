@@ -36,7 +36,7 @@ export default {
     if (typeof data === 'undefined' || !data) {
       this.GetMardownList();
     } else {
-      if (data.timestamp <= new Date().getTime()) {
+      if (data.timestamp <= (new Date().getTime()-120000)) {
         console.log('updated')
         this.GetMardownList();
       } else {
@@ -69,7 +69,7 @@ export default {
         })
         .then(function (response) {
           console.log(response)
-          _this.$data.markdownContents = _this.$data.markdownit.render(response.replace(/.img/gi, `https://raw.githubusercontent.com/masungDEV/Note/master/${category}/img`));
+          _this.$data.markdownContents = _this.$data.markdownit.render(response).replace(/.\/img/gi, `https://raw.githubusercontent.com/masungDEV/Note/master/${category}/img`);
         });
     },
     GetMardownList() {
