@@ -1,13 +1,10 @@
 const path = require('path');
-const webpack = require('webpack')
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
-const markdownConfig = require('./webpack.config.markdown');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 
-const webpackBasicConfig = merge(markdownConfig, {
+const webpackBasicConfig = {
     entry: ['babel-polyfill', './src/index.js'],
     output: {
         path: __dirname + "/docs",
@@ -34,11 +31,10 @@ const webpackBasicConfig = merge(markdownConfig, {
     resolve: {
         alias: {
             "vue$": "vue/dist/vue.esm.js",
-            'View': path.resolve(__dirname, './src/Vue'),           
+            'View': path.resolve(__dirname, './src/Vue'),
             'VueConfig': path.resolve(__dirname, './src/Vue/config'),
-            'Markdown': path.resolve(__dirname, './src/markdown'),
         },
-        extensions: ['*', '.js', '.vue', '.json']
+        extensions: ['*', '.js', '.vue', '.json', '.md']
     },
     plugins: [
         new VueLoaderPlugin(),
@@ -65,5 +61,5 @@ const webpackBasicConfig = merge(markdownConfig, {
             // maxSize: 200,
         },
     }
-});
+}
 module.exports = webpackBasicConfig;

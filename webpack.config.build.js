@@ -7,18 +7,14 @@
  const webpackBuildConfig = merge(baseConfig, {
      output: {
          path: __dirname + "/docs",
-         //  publicPath: "/Note.NET"
      },
      plugins: [
          new CleanWebpackPlugin({
              verbose: true
          }),
-         new CopyWebpackPlugin([
-            { from: './src/CNAME' }
-        ]),
-        new CopyWebpackPlugin([
-            { from: './src/markdown', to:'./md' }
-        ])
+         new CopyWebpackPlugin([{
+             from: './src/CNAME'
+         }]),
      ]
  });
  module.exports = webpackBuildConfig

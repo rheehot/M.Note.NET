@@ -1,47 +1,121 @@
 <template>
-    <section>
-        <div v-for="(mdCate , idx) in markdownList" v-bind:key="idx">
+  <section>
+    <p>
+      <a v-on:click="onCateClick" class="btn" data-toggle="collapse" v-bind:href="'#collapse' + idx" aria-expanded="false" v-bind:aria-controls="'collapse' + idx" v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx">
         {{mdCate.category}}
-        <button v-for="(md, mdIdx) in mdCate.mdList" v-bind:key="mdIdx" v-on:click="mdChange" v-bind:value="md.category + '/' + md.filename">{{md.filename}}</button>
-        </div>
-        <br />--------------------------------------------------------------<br />
-        <div v-show="isLoading"> loading... </div><br/>
-        <article v-show="!isLoading" class="markdown-body" v-html="md"></article>
-    </section>
+      </a>
+    </p>
+    <div class="collapse" v-bind:id="'collapse' + idx" v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx">
+      <div class="card card-body">
+        <a class="btn" v-for="(md, mdIdx) in mdCate.mdList" href="javascript:;" v-on:click="GetMarkdown(md)" v-bind:key="mdIdx">{{md.name.replace(".md","")}}</a>
+      </div>
+    </div>
+    <span v-if="isLoading">Category Loading now....</span>
+    <span v-if="isContentLoading">Contents Loading now....</span>
+    <article class="markdown-body" v-if="!isContentLoading" v-html="markdownContents"></article>
+  </section>
 </template>
 
 
 <script>
+import markdownit from 'markdown-it';
+
 export default {
-     data() {
+  data() {
     return {
-      msg: "This is MaSungNote.NET",
-      markdownList: [],
-      md: "",
+      markdownCateList: [],
+      markdownContents: "",
       isLoading: false,
+      isContentLoading: false,
     }
   },
   mounted() {
-
-    console.log(__markdownList__)
-    this.$data.markdownList = __markdownList__
-    // this.$data.md = mark;
+    var data = JSON.parse(localStorage.getItem("markdownCateList"))
+    if (typeof data === 'undefined' || !data) {
+      this.GetMardownList();
+    } else {
+      if (data.timestamp <= new Date().getTime()) {
+        console.log('updated')
+        this.GetMardownList();
+      } else {
+        console.log('use before')
+        this.$data.markdownCateList = data.markdownCateList
+      }
+    }
   },
   methods: {
-    mdChange(e) {
-      console.log(e.target.value);
-      var targetMd = `./md/${e.target.value}`;
-      var _this = this;
-      this.$data.isLoading = true;
-      this.importMardkdownn(targetMd).then(target => {
-        _this.$data.md = target
-        _this.$data.isLoading = false;
-      })
+    onCateClick(e) {
+      for (var i = 0; i < this.$data.markdownCateList.length; i++) {
+        var id = 'collapse' + i;
+        if (e.target.id != id) {
+          document.getElementById(id).className = "collapse"
+        }
+      }
+      console.log(e)
     },
-    async importMardkdownn(targetMd) {
-      var result = await import(`${targetMd}`)
-      return result;
-    }
+    GetMarkdown(markdownData) {
+      var _this = this;
+      _this.$data.isContentLoading = true;
+      var url = `https://api.github.com/repos/masungDEV/${markdownData.category}/contents/${markdownData.name}`;
+      url = "https://api.github.com/repos/masungDEV/Note/contents/MS.Net/sample.1.md?ref=master"
+      console.log(url);
+      var myRequest = new Request(url, { headers: new Headers({ 'accept': 'application/vnd.github.v3.raw' }) });
+      fetch(myRequest)
+        .then(function (response) {
+          _this.$data.isContentLoading = false;
+          if (!response.ok) return alert('페이지에 문제가 있습니다.')
+          return response.text()
+        })
+        .then(function (response) {
+          console.log(response)
+          _this.$data.markdownContents = response;
+        });
+    },
+    GetMardownList() {
+      var _this = this;
+      var url = "https://api.github.com/repos/masungDev/Note/contents/"
+      var myRequest = new Request(url, { headers: new Headers({ 'accept': 'application/vnd.github.v3.raw' }) });
+      fetch(myRequest)
+        .then(function (response) {
+          if (!response.ok) return alert('페이지에 문제가 있습니다.')
+          return response.text()
+        })
+        .then(function (response) {
+          JSON.parse(response).forEach(data => {
+            if (data.type == 'dir') {
+              console.log('ok - ' + data.name)
+              _this.GetMarkdownsByCate(data)
+            }
+          })
+        });
+    },
+    GetMarkdownsByCate(targetMarkdownCate) {
+      var _this = this;
+      var url = `https://api.github.com/repos/masungDev/Note/contents/${targetMarkdownCate.name}`
+      var myRequest = new Request(url, { headers: new Headers({ 'accept': 'application/vnd.github.v3.raw' }) });
+      fetch(myRequest)
+        .then(function (response) {
+          if (!response.ok) return alert('페이지에 문제가 있습니다.')
+          return response.text()
+        })
+        .then(function (response) {
+          var mdList = [];
+          JSON.parse(response).forEach(data => {
+            if (data.type == 'file') {
+              mdList.push(data)
+            }
+          })
+          _this.$data.markdownCateList.push({
+            category: targetMarkdownCate.name,
+            mdList: mdList,
+          });
+          console.log(_this.$data.markdownCateList)
+          localStorage.setItem("markdownCateList", JSON.stringify({
+            markdownCateList: _this.$data.markdownCateList,
+            timestamp: new Date().getTime(),
+          }));
+        });
+    },
   }
 }
 
