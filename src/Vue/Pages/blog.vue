@@ -67,7 +67,7 @@ export default {
         })
         .then(function (response) {
           console.log(response)
-          _this.$data.markdownContents = response;
+          _this.$data.markdownContents = markdownit.render(response);
         });
     },
     GetMardownList() {
