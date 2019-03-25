@@ -56,8 +56,7 @@ export default {
     GetMarkdown(markdownData) {
       var _this = this;
       _this.$data.isContentLoading = true;
-      var url = `https://api.github.com/repos/masungDEV/${markdownData.category}/contents/${markdownData.name}`;
-      url = "https://api.github.com/repos/masungDEV/Note/contents/MS.Net/sample.1.md?ref=master"
+      var url = markdownData.url
       console.log(url);
       var myRequest = new Request(url, { headers: new Headers({ 'accept': 'application/vnd.github.v3.raw' }) });
       fetch(myRequest)
