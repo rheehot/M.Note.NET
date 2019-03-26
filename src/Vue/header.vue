@@ -35,6 +35,10 @@ export default {
 }
 </script>
 <style>
+a {
+  color: #9579db;
+  font-family: Georgia, serif;
+}
 .title {
   font-family: Georgia, serif;
   /* font-size: 24px; */
