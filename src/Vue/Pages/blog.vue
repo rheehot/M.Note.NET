@@ -1,10 +1,15 @@
 <template>
   <section>
-    <p>
-      <a v-on:click="onCateClick" class="btn" data-toggle="collapse" v-bind:href="'#collapse' + idx" aria-expanded="false" v-bind:aria-controls="'collapse' + idx" v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx">
+    <ul class="nav nav-tabs">
+      <li v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx" v-bind:class="{active : (clickedCateId==('collapse'+idx))}">
+        <a v-bind:target="'collapse'+idx" v-on:click="onCateClick" data-toggle="collapse" v-bind:href="'#collapse' + idx" aria-expanded="false" v-bind:aria-controls="'collapse' + idx" class="styleNav">{{mdCate.category}}</a>
+      </li>
+    </ul>
+    <!-- <p>
+      <a v-on:click="onCateClick" data-toggle="collapse" v-bind:href="'#collapse' + idx" aria-expanded="false" v-bind:aria-controls="'collapse' + idx">
         {{mdCate.category}}
       </a>
-    </p>
+    </p> -->
     <div class="collapse" v-bind:id="'collapse' + idx" v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx">
       <div class="card card-body">
         <a class="btn" v-for="(md, mdIdx) in mdCate.mdList" href="javascript:;" v-on:click="GetMarkdown(md,mdCate.category)" v-bind:key="mdIdx">{{md.name.replace(".md","")}}</a>
@@ -26,6 +31,7 @@ export default {
       markdownContents: "",
       isLoading: false,
       isContentLoading: false,
+      clickedCateId: "",
     }
   },
   mounted() {
@@ -36,7 +42,7 @@ export default {
     if (typeof data === 'undefined' || !data) {
       this.GetMardownList();
     } else {
-      if (data.timestamp <= (new Date().getTime()-120000)) {
+      if (data.timestamp <= (new Date().getTime() - 120000)) {
         console.log('updated')
         this.GetMardownList();
       } else {
@@ -47,9 +53,11 @@ export default {
   },
   methods: {
     onCateClick(e) {
+      this.$data.clickedCateId = e.target.target
+      console.log(this.$data.clickedCateId)
       for (var i = 0; i < this.$data.markdownCateList.length; i++) {
         var id = 'collapse' + i;
-        if (e.target.id != id) {
+        if (this.$data.clickedCateId != id) {
           document.getElementById(id).className = "collapse"
         }
       }
@@ -73,6 +81,7 @@ export default {
         });
     },
     GetMardownList() {
+      this.$data.isLoading = true;
       var _this = this;
       var url = "https://api.github.com/repos/masungDev/Note/contents/"
       var myRequest = new Request(url, { headers: new Headers({ 'accept': 'application/vnd.github.v3.raw' }) });
@@ -96,6 +105,7 @@ export default {
       var myRequest = new Request(url, { headers: new Headers({ 'accept': 'application/vnd.github.v3.raw' }) });
       fetch(myRequest)
         .then(function (response) {
+          _this.$data.isLoading = false;
           if (!response.ok) return alert('페이지에 문제가 있습니다.')
           return response.text()
         })
@@ -134,5 +144,8 @@ export default {
   .markdown-body {
     padding: 15px;
   }
+}
+.styleNav {
+  padding: 7px 15px !important;
 }
 </style>
