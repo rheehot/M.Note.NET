@@ -38,13 +38,12 @@ export default {
 .title {
   font-family: Georgia, serif;
   /* font-size: 24px; */
-  letter-spacing: -2px;
-  word-spacing: 6px;
   color: #000000;
   font-weight: 700;
-  /* text-decoration: none solid rgb(68, 68, 68); */
-  font-style: italic;
   font-variant: normal;
-  text-transform: capitalize;
+  /* text-decoration: none solid rgb(68, 68, 68); */
+  /* font-style: italic;
+  
+  text-transform: capitalize; */
 }
 </style>
