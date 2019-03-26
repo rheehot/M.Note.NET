@@ -7,7 +7,7 @@
     </p>
     <div class="collapse" v-bind:id="'collapse' + idx" v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx">
       <div class="card card-body">
-        <a class="btn" v-for="(md, mdIdx) in mdCate.mdList" href="javascript:;" v-on:click="GetMarkdown(md)" v-bind:key="mdIdx">{{md.name.replace(".md","")}}</a>
+        <a class="btn" v-for="(md, mdIdx) in mdCate.mdList" href="javascript:;" v-on:click="GetMarkdown(md,mdCate.category)" v-bind:key="mdIdx">{{md.name.replace(".md","")}}</a>
       </div>
     </div>
     <span v-if="isLoading">Category Loading now....</span>
@@ -36,7 +36,7 @@ export default {
     if (typeof data === 'undefined' || !data) {
       this.GetMardownList();
     } else {
-      if (data.timestamp <= new Date().getTime()) {
+      if (data.timestamp <= (new Date().getTime()-120000)) {
         console.log('updated')
         this.GetMardownList();
       } else {
@@ -55,7 +55,7 @@ export default {
       }
       console.log(e)
     },
-    GetMarkdown(markdownData) {
+    GetMarkdown(markdownData, category) {
       var _this = this;
       _this.$data.isContentLoading = true;
       var url = markdownData.url
@@ -69,7 +69,7 @@ export default {
         })
         .then(function (response) {
           console.log(response)
-          _this.$data.markdownContents = _this.$data.markdownit.render(response);
+          _this.$data.markdownContents = _this.$data.markdownit.render(response).replace(/.\/img/gi, `https://raw.githubusercontent.com/masungDEV/Note/master/${category}/img`);
         });
     },
     GetMardownList() {
