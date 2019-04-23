@@ -19,16 +19,23 @@ export default {
         width: 500,
         height: 500
       },
-      d3Words: [{ word: "Name : Sungmin-MA", size: "35" },
-      { word: "Birth : 1992.10.30", size: "20" },
-      { word: "Contact : masungmin.dev@gmail.com", size: "20" },
-      { word: "Sex : Male", size: "20" },
+      d3Words: [{ word: "MaSungmin", size: "35" },
+      { word: "1992.10.30", size: "20" },
+      { word: "masungmin.dev@gmail.com", size: "20" },
+      { word: "Male", size: "20" },
+      { word: "Male", size: "20" },
+      { word: "Male", size: "20" },
+      { word: "Male", size: "20" },
+      { word: "Male", size: "20" },
+      { word: "Male", size: "20" },
+      { word: "Male", size: "20" },
+      { word: "Male", size: "20" },
       ]
     }
   },
   mounted() {
     console.log(this.$data.d3Size)
-    this.$data.d3Size.width = ((window.innerWidth / 10 * 9) - this.$data.d3Size.margin.left - this.$data.d3Size.margin.right) / 2
+    this.$data.d3Size.width = ((window.innerWidth / 10 * 9) - this.$data.d3Size.margin.left - this.$data.d3Size.margin.right)
     this.$data.d3Size.height = ((window.innerHeight / 5 * 4) - this.$data.d3Size.margin.top - this.$data.d3Size.margin.bottom)
     this.d3Contents()
   },
@@ -61,15 +68,21 @@ export default {
       this.$data.d3Layer.start();
     },
     d3LayerDraw(words) {
+      var _this = this;
+      var defaultY = 50;
+      var transY = defaultY - (this.$data.d3Size.height / 2);
       this.$data.d3Svg
         .append("g")
-        .attr("transform", "translate(" + this.$data.d3Layer.size()[0] / 2 + "," + this.$data.d3Layer.size()[1] / 2 + ")")
+        .attr("transform", "translate(" + this.$data.d3Layer.size()[0] * 0.5 + "," + this.$data.d3Layer.size()[1] * 0.5 + ")")
         .selectAll("text")
         .data(words)
         .enter().append("text")
         .style("font-size", function (d) { return d.size; })
         .style("fill", function (d) {
-          return (Math.random() >= 0.3 ? "#9579DB" : "#B9B8ED");
+          if (d.text.indexOf("MaSungmin") > -1)
+            return "#000"
+          else
+            return (Math.random() >= 0.3 ? "#9579DB" : "#B9B8ED");
         })
         .attr("text-anchor", "middle")
         .style("font-family", "Georgia, serif")
@@ -77,7 +90,11 @@ export default {
         .transition()
         .duration(600)
         .attr("transform", function (d) {
-          return "translate(" + [d.x, d.y] + ")"        })
+          if (d.text.indexOf("MaSungmin") > -1)
+            return "translate(" + [d.x, defaultY - (_this.$data.d3Size.height / 2)] + ")";
+          else
+            return "translate(" + [d.x, (transY += 50)] + ")";
+        })
         .text(function (d) { return d.text; })
     },
   }

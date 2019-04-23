@@ -1,7 +1,9 @@
 <template>
   <section>
     <header-vue></header-vue>
-    <router-view></router-view>
+    <div class="container">
+      <router-view></router-view>
+    </div>
     <footer-vue></footer-vue>
   </section>
 </template>

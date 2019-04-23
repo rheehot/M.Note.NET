@@ -12,7 +12,7 @@
     </p> -->
     <div class="collapse" v-bind:id="'collapse' + idx" v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx">
       <div class="card card-body">
-        <a class="btn" v-for="(md, mdIdx) in mdCate.mdList" href="javascript:;" v-on:click="GetMarkdown(md,mdCate.category)" v-bind:key="mdIdx">{{md.name.replace(".md","")}}</a>
+        <a class="btn" v-for="(md, mdIdx) in mdCate.mdList" href="javascript:;" v-on:click="GetMarkdown(md,mdCate.category)" v-bind:key="mdIdx">◆ {{md.name.replace(".md","")}}</a>
       </div>
     </div>
     <span v-if="isLoading">Category Loading now....</span>
