@@ -41,21 +41,19 @@ export default {
         _this.$data.hasScroll = true;
       }
       setInterval(function () {
-        if (_this.$data.hasScrolled) {
+        if (_this.$data.hasScroll) {
           // 접근하기 쉽게 현재 스크롤의 위치를 저장한다. 
           var st = $(this).scrollTop(); // 설정한 delta 값보다 더 스크롤되었는지를 확인한다. 
           if (Math.abs(_this.$data.navBarTop - st) <= location) return; // 헤더의 높이보다 더 스크롤되었는지 확인하고 스크롤의 방향이 위인지 아래인지를 확인한다. 
           // If current position > last position AND scrolled past navbar... 
-          if (st > _this.$data.navBarTop && st > navbarHeight) {
+          if (st > _this.$data.navBarTop && st > _this.$data.navbarHeight) {
             // Scroll Down 
             $(".custom-header").removeClass('nav-down').addClass('nav-up');
           } else {
-            // Scroll Up // If did not scroll past the document (possible on mac)... 
-            if (st + $(window).height() < $(document).height()) {
-              $(".custom-header").removeClass('nav-up').addClass('nav-down');
-            }
-          } // this.$data.navBarTop 에 현재 스크롤위치를 지정한다. this.$data.navBarTop = st;
-          _this.$data.hasScrolled = false;
+            $(".custom-header").removeClass('nav-up').addClass('nav-down');
+          } // this.$data.navBarTop 에 현재 스크롤위치를 지정한다. 
+          _this.$data.navBarTop = st;
+          _this.$data.hasScroll = false;
         }
       }, 250);
     }
@@ -71,6 +69,8 @@ export default {
   width: 100%;
   height: 50px;
   transition: top 0.2s ease-in-out;
+  background-color: #fff;
+  z-index: 999;
 }
 body {
   padding-top: 50px;
