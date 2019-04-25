@@ -81,6 +81,7 @@ body {
 a {
   color: #9579db;
   font-family: Georgia, serif;
+  font-size: 1.2em;
 }
 .title {
   font-family: Georgia, serif;
@@ -88,6 +89,7 @@ a {
   color: #000000;
   font-weight: 700;
   font-variant: normal;
+  font-size: 1.3em;
   /* text-decoration: none solid rgb(68, 68, 68); */
   /* font-style: italic;
   

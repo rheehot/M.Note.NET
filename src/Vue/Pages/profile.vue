@@ -14,29 +14,33 @@ export default {
     return {
       d3Layer: null,
       d3Svg: null,
+      defaultWordHeight: 40,
       d3Size: {
         margin: { top: 30, right: 10, bottom: 10, left: 10 },
         width: 500,
         height: 500
       },
-      d3Words: [{ word: "MaSungmin", size: "35" },
-      { word: "1992.10.30", size: "20" },
-      { word: "masungmin.dev@gmail.com", size: "20" },
-      { word: "Male", size: "20" },
-      { word: "Male", size: "20" },
-      { word: "Male", size: "20" },
-      { word: "Male", size: "20" },
-      { word: "Male", size: "20" },
-      { word: "Male", size: "20" },
-      { word: "Male", size: "20" },
-      { word: "Male", size: "20" },
-      ]
+      d3Words: [
+        { word: "MaSungmin", size: "35" },
+        { word: "1993.10.30", size: "20" },
+        { word: "Male", size: "20" },
+        { word: "masungmin.dev@gmail.com", size: "20" },
+        { word: "Republic of Korea", size: "20" },
+        { word: "Gyeong-gi", size: "20" },
+        { word: "Web-Developer", size: "20" },
+        { word: "Javascript", size: "20" },
+        { word: "C#", size: "20" },
+        { word: "Java", size: "20" },
+        { word: ".Net Framework", size: "20" },
+        { word: "Spring Framework", size: "20" },
+        { word: "Vue.js", size: "20" },
+        { word: "React", size: "20" },]
     }
   },
   mounted() {
     console.log(this.$data.d3Size)
     this.$data.d3Size.width = ((window.innerWidth / 10 * 9) - this.$data.d3Size.margin.left - this.$data.d3Size.margin.right)
-    this.$data.d3Size.height = ((window.innerHeight / 5 * 4) - this.$data.d3Size.margin.top - this.$data.d3Size.margin.bottom)
+    this.$data.d3Size.height = ((this.$data.d3Words.length * (this.$data.defaultWordHeight + 20)) - this.$data.d3Size.margin.top - this.$data.d3Size.margin.bottom)
     this.d3Contents()
   },
   methods: {
@@ -69,7 +73,7 @@ export default {
     },
     d3LayerDraw(words) {
       var _this = this;
-      var defaultY = 50;
+      var defaultY = this.$data.defaultWordHeight;
       var transY = defaultY - (this.$data.d3Size.height / 2);
       this.$data.d3Svg
         .append("g")
