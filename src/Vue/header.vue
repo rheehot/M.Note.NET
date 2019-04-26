@@ -67,7 +67,6 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  height: 50px;
   transition: top 0.2s ease-in-out;
   background-color: #fff;
   z-index: 999;
@@ -81,15 +80,16 @@ body {
 a {
   color: #9579db;
   font-family: Georgia, serif;
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 .title {
   font-family: Georgia, serif;
   /* font-size: 24px; */
   color: #000000;
+  font-size: 1.1em;
   font-weight: 700;
   font-variant: normal;
-  font-size: 1.3em;
+
   /* text-decoration: none solid rgb(68, 68, 68); */
   /* font-style: italic;
   

@@ -21,13 +21,14 @@ export default {
         height: 500
       },
       d3Words: [
-        { word: "MaSungmin", size: "35" },
+        { word: "MaSungmin", size: "35", dark: true },
         { word: "1993.10.30", size: "20" },
         { word: "Male", size: "20" },
         { word: "masungmin.dev@gmail.com", size: "20" },
         { word: "Republic of Korea", size: "20" },
         { word: "Gyeong-gi", size: "20" },
         { word: "Web-Developer", size: "20" },
+        { word: "SkillSet", size: "20", dark: true },
         { word: "Javascript", size: "20" },
         { word: "C#", size: "20" },
         { word: "Java", size: "20" },
@@ -64,7 +65,7 @@ export default {
       // Wordcloud features that are different from one word to the other must be here
       this.$data.d3Layer = d3Cloud()
         .size([width, height])
-        .words(myWords.map(function (d) { return { text: d.word, size: d.size }; }))
+        .words(myWords.map(function (d) { console.log(d); return { text: d.word, size: d.size, dark: d.dark }; }))
         .padding(5)        //space between words
         // .rotate(function () { return ~~(Math.random() * 2) * 90; })
         .fontSize(function (d) { return d.size; })      // font size of words
@@ -72,6 +73,8 @@ export default {
       this.$data.d3Layer.start();
     },
     d3LayerDraw(words) {
+      console.log('0--------')
+      console.log(words)
       var _this = this;
       var defaultY = this.$data.defaultWordHeight;
       var transY = defaultY - (this.$data.d3Size.height / 2);
@@ -81,9 +84,13 @@ export default {
         .selectAll("text")
         .data(words)
         .enter().append("text")
-        .style("font-size", function (d) { return d.size; })
+        .style("font-size",
+          function (d) {
+            if (d.dark) return 35;
+            else return d.size;
+          })
         .style("fill", function (d) {
-          if (d.text.indexOf("MaSungmin") > -1)
+          if (d.dark)
             return "#000"
           else
             return (Math.random() >= 0.3 ? "#9579DB" : "#B9B8ED");
@@ -94,6 +101,7 @@ export default {
         .transition()
         .duration(600)
         .attr("transform", function (d) {
+          console.log(d)
           if (d.text.indexOf("MaSungmin") > -1)
             return "translate(" + [d.x, defaultY - (_this.$data.d3Size.height / 2)] + ")";
           else

@@ -3,7 +3,7 @@ import profileVue from 'View/Pages/profile.vue'
 import mainVue from 'View/Pages/main.vue'
 import historyVue from "View/Pages/history.vue";
 const routes = [{
-        name: "MaSungNote.NET",
+        name: "MaSung.Note",
         path: "/",
         component: mainVue
     },
