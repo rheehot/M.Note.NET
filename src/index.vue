@@ -1,11 +1,15 @@
 <template>
-  <section>
+  <div>
     <header-vue></header-vue>
     <div class="container">
-      <router-view></router-view>
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <router-view></router-view>
+        </div>
+      </div>
     </div>
     <footer-vue></footer-vue>
-  </section>
+  </div>
 </template>
 <script>
 import headerVue from 'View/header.vue'

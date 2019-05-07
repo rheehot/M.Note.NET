@@ -1,8 +1,5 @@
 <template>
-  <section>
-    <div id="myD3PlayGround" class="container"></div>
-  </section>
-
+  <div id="myD3PlayGround"></div>
 </template>
 
 

@@ -15,8 +15,9 @@
         <a class="btn" v-for="(md, mdIdx) in mdCate.mdList" href="javascript:;" v-on:click="GetMarkdown(md,mdCate.category)" v-bind:key="mdIdx">◆ {{md.name.replace(".md","")}}</a>
       </div>
     </div>
-    <span v-if="isLoading">Category Loading now....</span>
-    <span v-if="isContentLoading">Contents Loading now....</span>
+    <div v-if="isLoading || isContentLoading" class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
     <article class="markdown-body" v-if="!isContentLoading" v-html="markdownContents"></article>
   </section>
 </template>
