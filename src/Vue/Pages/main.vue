@@ -31,7 +31,7 @@ export default {
   },
   mounted() {
     console.log(this.$data.d3Size)
-    this.$data.d3Size.width = ((window.innerWidth / 10 * 9) - this.$data.d3Size.margin.left - this.$data.d3Size.margin.right)
+    this.$data.d3Size.width = ((document.getElementById("myD3PlayGround").offsetWidth / 10 * 9) - this.$data.d3Size.margin.left - this.$data.d3Size.margin.right)
     this.$data.d3Size.height = ((window.innerHeight / 5 * 4) - this.$data.d3Size.margin.top - this.$data.d3Size.margin.bottom)
     this.d3Contents()
   },
@@ -74,7 +74,7 @@ export default {
         // .style("fill", "#967BDC")
         .style("fill", function (d) {
           if (d.text.indexOf("MaSung") > -1) return "#000"
-          return (Math.random() >= 0.3 ? "#9579DB" : "#B9B8ED");
+          return (Math.random() >= 0.3 ? "#696969" : "#808080");
         })
         .attr("text-anchor", "middle")
         .style("font-family", "Georgia, serif")

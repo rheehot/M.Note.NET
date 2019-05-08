@@ -3,7 +3,7 @@
     <header-vue></header-vue>
     <div class="container">
       <div class="row mb-2">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <router-view></router-view>
         </div>
       </div>

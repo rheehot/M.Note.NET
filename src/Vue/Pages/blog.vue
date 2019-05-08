@@ -1,24 +1,23 @@
 <template>
   <section>
-    <ul class="nav nav-tabs">
-      <li v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx" v-bind:class="{active : (clickedCateId==('collapse'+idx))}">
-        <a v-bind:target="'collapse'+idx" v-on:click="onCateClick" data-toggle="collapse" v-bind:href="'#collapse' + idx" aria-expanded="false" v-bind:aria-controls="'collapse' + idx" class="styleNav">{{mdCate.category}}</a>
-      </li>
-    </ul>
-    <!-- <p>
-      <a v-on:click="onCateClick" data-toggle="collapse" v-bind:href="'#collapse' + idx" aria-expanded="false" v-bind:aria-controls="'collapse' + idx">
+    <div class="btn-group btn-block" role="group">
+      <button type="button" class="btn btn-secondary" v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx" v-bind:value="'collapse'+idx" v-on:click="onCateClick">
         {{mdCate.category}}
-      </a>
-    </p> -->
-    <div class="collapse" v-bind:id="'collapse' + idx" v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx">
-      <div class="card card-body">
-        <a class="btn" v-for="(md, mdIdx) in mdCate.mdList" href="javascript:;" v-on:click="GetMarkdown(md,mdCate.category)" v-bind:key="mdIdx">◆ {{md.name.replace(".md","")}}</a>
+      </button>
+    </div>
+    <div class="card text-center">
+      <transition-group tag="ul" name="fade" class="list-group list-group-flush" v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx" v-show="clickedCateId == ('collapse'+idx)">
+        <li class="list-group-item" v-for="(md, mdIdx) in mdCate.mdList" v-on:click="GetMarkdown(md,mdCate.category)" v-bind:key="mdIdx">◆ {{md.name.replace(".md","")}}</li>
+      </transition-group>
+    </div>
+    <div class="d-flex justify-content-center" v-if="isLoading || isContentLoading">
+      <div class="spinner-grow" style="width: 4rem; height: 4rem;margin-top:5rem;" role="status">
+        <span class="sr-only">Loading...</span>
       </div>
     </div>
-    <div v-if="isLoading || isContentLoading" class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <article class="markdown-body" v-if="!isContentLoading" v-html="markdownContents"></article>
+    <transition name="bounce">
+      <article class="markdown-body" v-if="!isContentLoading" v-html="markdownContents"></article>
+    </transition>
   </section>
 </template>
 
@@ -54,15 +53,8 @@ export default {
   },
   methods: {
     onCateClick(e) {
-      this.$data.clickedCateId = e.target.target
-      console.log(this.$data.clickedCateId)
-      for (var i = 0; i < this.$data.markdownCateList.length; i++) {
-        var id = 'collapse' + i;
-        if (this.$data.clickedCateId != id) {
-          document.getElementById(id).className = "collapse"
-        }
-      }
       console.log(e)
+      this.$data.clickedCateId = e.target.value
     },
     GetMarkdown(markdownData, category) {
       var _this = this;
@@ -148,5 +140,29 @@ export default {
 }
 .styleNav {
   padding: 7px 15px !important;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.8s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+.bounce-enter-active {
+  animation: bounce-in 0.8s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.8s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>

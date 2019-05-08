@@ -1,5 +1,5 @@
 <template>
-  <div id="myD3PlayGround"></div>
+  <div id="myD3PlayGround" class="text-center"></div>
 </template>
 
 
@@ -37,7 +37,7 @@ export default {
   },
   mounted() {
     console.log(this.$data.d3Size)
-    this.$data.d3Size.width = ((window.innerWidth / 10 * 9) - this.$data.d3Size.margin.left - this.$data.d3Size.margin.right)
+    this.$data.d3Size.width = ((document.getElementById("myD3PlayGround").offsetWidth / 10 * 9) - this.$data.d3Size.margin.left - this.$data.d3Size.margin.right)
     this.$data.d3Size.height = ((this.$data.d3Words.length * (this.$data.defaultWordHeight + 20)) - this.$data.d3Size.margin.top - this.$data.d3Size.margin.bottom)
     this.d3Contents()
   },
@@ -90,7 +90,7 @@ export default {
           if (d.dark)
             return "#000"
           else
-            return (Math.random() >= 0.3 ? "#9579DB" : "#B9B8ED");
+            return (Math.random() >= 0.3 ? "#696969" : "#808080");
         })
         .attr("text-anchor", "middle")
         .style("font-family", "Georgia, serif")
