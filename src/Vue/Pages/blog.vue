@@ -5,9 +5,9 @@
         {{mdCate.category}}
       </button>
     </div>
-    <div class="card text-center">
+    <div class="card text-left">
       <transition-group tag="ul" name="fade" class="list-group list-group-flush" v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx" v-show="clickedCateId == ('collapse'+idx)">
-        <li class="list-group-item" v-for="(md, mdIdx) in mdCate.mdList" v-on:click="GetMarkdown(md,mdCate.category)" v-bind:key="mdIdx">◆ {{md.name.replace(".md","")}}</li>
+        <li class="list-group-item" v-bind:class="{'list-group-item-secondary' : md.name==selectedMarkdown }" v-for=" (md, mdIdx) in mdCate.mdList" v-on:click="GetMarkdown(md,mdCate.category)" v-bind:key="mdIdx">◆ {{md.name.replace(".md","")}}</li>
       </transition-group>
     </div>
     <div class="d-flex justify-content-center" v-if="isLoading || isContentLoading">
@@ -32,6 +32,7 @@ export default {
       isLoading: false,
       isContentLoading: false,
       clickedCateId: "",
+      selectedMarkdown: "",
     }
   },
   mounted() {
@@ -58,6 +59,7 @@ export default {
     },
     GetMarkdown(markdownData, category) {
       var _this = this;
+      this.$data.selectedMarkdown = markdownData.name;
       _this.$data.isContentLoading = true;
       var url = markdownData.url
       console.log(url);
@@ -73,6 +75,7 @@ export default {
           _this.$data.markdownContents = _this.$data.markdownit.render(response).replace(/.\/img/gi, `https://raw.githubusercontent.com/masungDEV/Note/master/${category}/img`);
         });
     },
+
     GetMardownList() {
       this.$data.isLoading = true;
       var _this = this;
