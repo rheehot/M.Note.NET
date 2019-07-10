@@ -16,7 +16,7 @@
               <path d="M21 21l-5.2-5.2"></path>
             </svg>
           </a> -->
-          <a class="btn btn-sm btn-outline-secondary" href="#">Contact</a>
+          <!-- <a class="btn btn-sm btn-outline-secondary" href="#">Contact</a> -->
         </div>
       </div>
     </header>
