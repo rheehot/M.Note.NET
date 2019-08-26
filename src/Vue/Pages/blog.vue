@@ -23,6 +23,7 @@
 
 
 <script>
+import 'highlight.js/styles/github-gist.css';
 export default {
   data() {
     return {
@@ -36,8 +37,17 @@ export default {
     }
   },
   mounted() {
+    var hljs = require('highlight.js');
     this.$data.markdownit = require('markdown-it')({
       html: true,
+      highlight: function (str, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+          try {
+            return hljs.highlight(lang, str).value;
+          } catch (__) { }
+        }
+        return '';
+      }
     });
     var data = JSON.parse(localStorage.getItem("markdownCateList"))
     if (typeof data === 'undefined' || !data) {
@@ -49,13 +59,23 @@ export default {
       } else {
         console.log('use before')
         this.$data.markdownCateList = data.markdownCateList
+        var selected = localStorage.getItem("markdownCate:selected")
+        var isExist = this.$data.markdownCateList.find(function (item, i) {
+          if ('collapse' + i === selected) return true;
+        });
+        if (isExist) this.$data.clickedCateId = selected
       }
     }
+  },
+  destroyed() {
+    console.log('destroyed')
+    localStorage.removeItem("markdownCate:selected");
   },
   methods: {
     onCateClick(e) {
       console.log(e)
       this.$data.clickedCateId = e.target.value
+      localStorage.setItem("markdownCate:selected", this.$data.clickedCateId);
     },
     GetMarkdown(markdownData, category) {
       var _this = this;
