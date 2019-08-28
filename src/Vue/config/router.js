@@ -5,21 +5,25 @@ import historyVue from "View/Pages/history.vue";
 const routes = [{
         name: "MaSung.Note",
         path: "/",
+        default: "/",
         component: mainVue
     },
     {
         name: "Profile",
         path: "/profile",
+        default: "/profile",
         component: profileVue
     },
     {
         name: "Blog",
-        path: "/blog",
+        path: "/blog/:post",
+        default: "/blog/main",
         component: blogVue
     },
     {
         name: "History",
         path: "/history",
+        default: "/history",
         component: historyVue
     }
 ]

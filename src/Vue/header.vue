@@ -22,7 +22,7 @@
     </header>
     <div class="nav-scroller py-1 mb-2">
       <nav class="nav d-flex justify-content-between">
-        <router-link class="p-2 text-muted" v-bind:to="head.path" v-for="(head,idx) in headerList" v-bind:key="idx" v-bind:class="{active : (head.name == NowRouted)}">{{head.name}}</router-link>
+        <router-link class="p-2 text-muted" v-bind:to="head.default" v-for="(head,idx) in headerList" v-bind:key="idx" v-bind:class="{active : (head.name == NowRouted)}">{{head.name}}</router-link>
       </nav>
     </div>
     <!-- <ul class="nav flex-column custom-header">

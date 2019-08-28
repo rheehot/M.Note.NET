@@ -1,54 +1,40 @@
 <template>
   <section>
     <div class="btn-group btn-block" role="group">
-      <button type="button" class="btn btn-secondary" v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx" v-bind:value="'collapse'+idx" v-on:click="onCateClick">
+      <button type="button" class="btn btn-secondary" v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx" v-bind:value="mdCate.category" v-on:click="onCateClick">
         {{mdCate.category}}
       </button>
     </div>
     <div class="card text-left">
-      <transition-group tag="ul" name="fade" class="list-group list-group-flush" v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx" v-show="clickedCateId == ('collapse'+idx)">
-        <li class="list-group-item" v-bind:class="{'list-group-item-secondary' : md.name==selectedMarkdown }" v-for=" (md, mdIdx) in mdCate.mdList" v-on:click="GetMarkdown(md,mdCate.category)" v-bind:key="mdIdx">◆ {{md.name.replace(".md","")}}</li>
+      <transition-group tag="ul" name="fade" class="list-group list-group-flush" v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx" v-show="clickedCateId == mdCate.category">
+        <li class="list-group-item" v-bind:class="{'list-group-item-secondary' : md.name==selectedMarkdown }" v-for=" (md, mdIdx) in mdCate.mdList" v-on:click="CallGetMarkdown(md,mdCate.category)" v-bind:key="mdIdx">◆ {{md.name.replace(".md","")}}</li>
       </transition-group>
     </div>
-    <div class="d-flex justify-content-center" v-if="isLoading || isContentLoading">
-      <div class="spinner-grow" style="width: 4rem; height: 4rem;margin-top:5rem;" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div>
-    <transition name="bounce">
-      <article class="markdown-body" v-if="!isContentLoading" v-html="markdownContents"></article>
-    </transition>
+    <loader v-bind:isLoading="isLoading"></loader>
+    <post></post>
   </section>
 </template>
 
 
 <script>
-import 'highlight.js/styles/github-gist.css';
+
+import postVue from './blog/post.vue'
+import loaderVue from './component/loader.vue'
 export default {
+  components: {
+    post: postVue,
+    loader: loaderVue,
+  },
   data() {
     return {
       markdownit: require('markdown-it'),
       markdownCateList: [],
-      markdownContents: "",
       isLoading: false,
-      isContentLoading: false,
       clickedCateId: "",
       selectedMarkdown: "",
     }
   },
   mounted() {
-    var hljs = require('highlight.js');
-    this.$data.markdownit = require('markdown-it')({
-      html: true,
-      highlight: function (str, lang) {
-        if (lang && hljs.getLanguage(lang)) {
-          try {
-            return hljs.highlight(lang, str).value;
-          } catch (__) { }
-        }
-        return '';
-      }
-    });
     var data = JSON.parse(localStorage.getItem("markdownCateList"))
     if (typeof data === 'undefined' || !data) {
       this.GetMardownList();
@@ -61,41 +47,27 @@ export default {
         this.$data.markdownCateList = data.markdownCateList
         var selected = localStorage.getItem("markdownCate:selected")
         var isExist = this.$data.markdownCateList.find(function (item, i) {
-          if ('collapse' + i === selected) return true;
+          if (item.category === selected) return true;
         });
         if (isExist) this.$data.clickedCateId = selected
       }
     }
   },
-  destroyed() {
-    console.log('destroyed')
-    localStorage.removeItem("markdownCate:selected");
-  },
   methods: {
     onCateClick(e) {
       console.log(e)
       this.$data.clickedCateId = e.target.value
-      localStorage.setItem("markdownCate:selected", this.$data.clickedCateId);
+      //localStorage.setItem("markdownCate:selected", this.$data.clickedCateId);
     },
-    GetMarkdown(markdownData, category) {
+    CallGetMarkdown(markdownData, category) {
       var _this = this;
       this.$data.selectedMarkdown = markdownData.name;
-      _this.$data.isContentLoading = true;
-      var url = markdownData.url
-      console.log(url);
-      var myRequest = new Request(url, { headers: new Headers({ 'accept': 'application/vnd.github.v3.raw' }) });
-      fetch(myRequest)
-        .then(function (response) {
-          _this.$data.isContentLoading = false;
-          if (!response.ok) return alert('페이지에 문제가 있습니다.')
-          return response.text()
-        })
-        .then(function (response) {
-          console.log(response)
-          _this.$data.markdownContents = _this.$data.markdownit.render(response).replace(/.\/img/gi, `https://raw.githubusercontent.com/masungDEV/Note/master/${category}/img`);
-        });
+      this.$router.push({
+        name: "Blog", params: {
+          post: `${this.$data.clickedCateId}_${this.$data.selectedMarkdown}`
+        }
+      })
     },
-
     GetMardownList() {
       this.$data.isLoading = true;
       var _this = this;
@@ -148,19 +120,6 @@ export default {
 
 </script>
 <style>
-.markdown-body {
-  box-sizing: border-box;
-  min-width: 200px;
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 45px;
-}
-
-@media (max-width: 767px) {
-  .markdown-body {
-    padding: 15px;
-  }
-}
 .styleNav {
   padding: 7px 15px !important;
 }
@@ -170,22 +129,5 @@ export default {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
-}
-.bounce-enter-active {
-  animation: bounce-in 0.8s;
-}
-.bounce-leave-active {
-  animation: bounce-in 0.8s reverse;
-}
-@keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(0.8);
-  }
-  100% {
-    transform: scale(1);
-  }
 }
 </style>
