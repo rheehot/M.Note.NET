@@ -1,8 +1,8 @@
 # My History
 
-## 2016 - 2019
+# 2016 - 2019
 
-### Tour B2C site development(2019)
+## Tour B2C site development(2019)
 > javascript, jQuery, C# .NET MVC
 
 - .NET Windows GAC 분리, 개선
