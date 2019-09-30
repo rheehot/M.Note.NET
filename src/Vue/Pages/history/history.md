@@ -40,7 +40,7 @@
 
 
 
-# University
+# University(2012~2016)
 
 ## 2016. Computer Science 2016 Paper Excellence Award
 
@@ -50,7 +50,7 @@
 ![Kinect_Dot_2](https://user-images.githubusercontent.com/24363683/65890748-5cc26780-e3de-11e9-9864-f64c7d5f5764.jpg)
 
 
-# INHATC DevClub 3rdBase(2015)
+# INHATC DevClub 3rdBase(2015~2016)
 
 ## PiggyBank - Android Game App
 > Java, Adnroid SDK, bayaba
@@ -70,9 +70,12 @@
 ![Riding_2](https://user-images.githubusercontent.com/24363683/65891173-128db600-e3df-11e9-8d57-e08fd690261b.png)
 ![Riding_3](https://user-images.githubusercontent.com/24363683/65891174-13264c80-e3df-11e9-988e-75e08b15f113.png)
 
+
+## Other Web Sites..
+
 ---
 
-# Other Web Sites..
+
 
 # 2014. ROK Army Hacking defense contest 6th 1st grand prize
 
