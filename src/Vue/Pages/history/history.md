@@ -1,6 +1,6 @@
 # My History
 
-# 2016 - 2019
+# 2016 - 2019 Web Developer
 
 ## Tour B2C site development(2019)
 > javascript, jQuery, C# .NET MVC
@@ -35,8 +35,8 @@
 
 - 각종 마케팅사 스크립트 총괄 관리를 위한 사이트 내 GTM 아키텍처 설계 및 개발
 
-### Tour B2C site development(2016)
-> javascript, jQuery, C# .NET MVC, MSSQL
+### Tour B2C site development(2016 ~)
+> javascript, jQuery, C# .NET MVC, MSSQL, JAVA, SpringBoot, Vue.js, Handlerbars.js
 
 
 
