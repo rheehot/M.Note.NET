@@ -6,9 +6,13 @@
       </button>
     </div>
     <div class="card text-left">
-      <transition-group tag="ul" name="fade" class="list-group list-group-flush" v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx" v-show="clickedCateId == mdCate.category">
-        <li class="list-group-item" v-bind:class="{'list-group-item-secondary' : md.name==selectedMarkdown }" v-for=" (md, mdIdx) in mdCate.mdList" v-on:click="CallGetMarkdown(md,mdCate.category)" v-bind:key="mdIdx">◆ {{md.name.replace(".md","")}}</li>
-      </transition-group>
+              <ul  class="list-group list-group-flush" v-for="(mdCate , idx) in markdownCateList" v-bind:key="idx" v-show="clickedCateId == mdCate.category">
+<li class="list-group-item" v-bind:class="{'list-group-item-secondary' : md.name==selectedMarkdown }" v-for="(md, mdIdx) in mdCate.mdList" v-on:click="CallGetMarkdown(md,mdCate.category)" v-bind:key="mdIdx">◆ {{md.name.replace(".md","")}}</li>
+        </ul>
+      <transition name="fade">
+
+        
+      </transition>
     </div>
     <loader v-bind:isLoading="isLoading"></loader>
     <post></post>
@@ -123,10 +127,10 @@ export default {
 .styleNav {
   padding: 7px 15px !important;
 }
-.fade-enter-active,
+/* .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.8s;
-}
+} */
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }

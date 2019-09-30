@@ -1,17 +1,38 @@
 <template>
-  <p class="text-monospace">
-      2013. ROK Army CERT<br/>
-      2014. ROK Army Hacking defense contest 6th 1st grand prize<br/>
-      2015. INHATC DevClub 3rdBase<br/>
-      2016. Windows xp/vista/7 Optimizer System</br>
-      2016. Computer Science 2016 Paper Excellence Award<br/>
-      2016. Web Developer...
-  </p>
+  <article class="markdown-body" v-html="markdownContents"></article>
 </template>
 
 
-<script>
+<script>   
+import historyMD from './history/history.md'
 export default {
-    
+    data(){
+      return {
+        markdownContents:"",
+        markdownit:null,
+      }
+    },
+    mounted(){
+      this.$data.markdownit = require('markdown-it')({
+        html: true
+      });
+      this.$data.markdownContents = this.$data.markdownit.render(historyMD)
+    }
 }
 </script>
+
+<style>
+  .markdown-body {
+    box-sizing: border-box;
+    min-width: 200px;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 45px;
+  }
+
+  @media (max-width: 767px) {
+    .markdown-body {
+      padding: 15px;
+    }
+  }
+</style>

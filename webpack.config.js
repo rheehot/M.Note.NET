@@ -26,7 +26,17 @@ const webpackBasicConfig = {
         }, {
             test: /\.css$/,
             use: ['style-loader', 'css-loader'],
-        }, ]
+        }, {
+            test: /\.md$/,
+            use: [
+                {
+                    loader: "html-loader"
+                },
+                {
+                    loader: "markdown-loader",
+                }
+            ]
+        }]
     },
     resolve: {
         alias: {
@@ -56,9 +66,6 @@ const webpackBasicConfig = {
         mergeDuplicateChunks: true,
         splitChunks: {
             chunks: 'all',
-            maxInitialRequests: 1,
-            minSize: 0,
-            // maxSize: 200,
         },
     }
 }
