@@ -19,14 +19,21 @@ export default {
       d3Words: [{ word: "MaSungNote", size: "35" },
       { word: "Developer", size: "30" },
       { word: ".Net Framework", size: "30" },
-      { word: "Vue.JS", size: "30" },
+      { word: "Vue.js", size: "30" },
       { word: "JAVA", size: "20" },
       { word: "SpringBoot", size: "30" },
       { word: "Spring Framework", size: "20" },
       { word: "Kinect SDK", size: "10" },
       { word: "Android SDK", size: "20" },
       { word: "Unity", size: "20" },
-      { word: "jQuery", size: "30" }, { word: "Javascript", size: "30" }, { word: "Ajax", size: "20" }, { word: "Node.js", size: "20" },]
+      { word: "jQuery", size: "30" }, 
+      { word: "Javascript", size: "30" }, 
+      { word: "Google AMP", size: "20" }, 
+      { word: "GTM", size: "20" }, 
+      { word: "React.js", size: "20" },
+      { word: "Git", size: "20" },
+      { word: "Jenkins", size: "20" },
+       { word: "Node.js", size: "20" },]
     }
   },
   mounted() {
