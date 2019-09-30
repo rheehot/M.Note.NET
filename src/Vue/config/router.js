@@ -1,7 +1,8 @@
-import blogVue from 'View/Pages/blog.vue'
-import profileVue from 'View/Pages/profile.vue'
-import mainVue from 'View/Pages/main.vue'
-import historyVue from "View/Pages/history.vue";
+const blogVue = () => import(/* webpackChunkName: "blogVue" */ 'View/Pages/blog.vue')
+const profileVue = () => import(/* webpackChunkName: "profileVue" */ 'View/Pages/profile.vue')
+const mainVue = () => import(/* webpackChunkName: mainVue" */ 'View/Pages/main.vue')
+const historyVue = () => import(/* webpackChunkName: "historyVue" */ "View/Pages/history.vue")
+
 const routes = [{
         name: "MaSung.Note",
         path: "/",
