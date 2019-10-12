@@ -30,7 +30,6 @@ export default {
 
 </script>
 <style>
-  .fade-enter-active,
   .fade-leave-active {
     transition-duration: 0.3s;
     transition-property: opacity;
